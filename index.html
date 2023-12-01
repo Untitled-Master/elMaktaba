@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المكتبة</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .header {
+      background: url('https://wallpapers.com/images/high/chill-4k-mountain-sunset-art-6jor3hh9q5cm5bjj.webp') center/cover no-repeat;
+      padding: 100px 20px;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    .container {
+      padding: 50px;
+    }
+
+    h2, h3 {
+      color: #3498db;
+    }
+
+    .card {
+      background-color: #333;
+      color: #fff;
+      height: 620px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-primary {
+      background-color: #3498db;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1 class="animate__animated animate__fadeInDown">مكتبة الكتب</h1>
+  <p class="lead animate__animated animate__fadeInUp">استكشف مجموعة الكتب الرائعة وساهم في رحلتك التعليمية</p>
+</div>
+
+<div class="container">
+  <section>
+    <h2 class="text-center mb-4 animate__animated animate__fadeInDown">الكتب</h2>
+
+    <!-- Dropdown for selecting tags -->
+    <div class="text-center mb-4">
+      <label for="tagSelect" class="mr-2">اختر الوسم:</label>
+      <select id="tagSelect" class="form-control">
+        <option value="all">الكل</option>
+        <option value="فلسفة">فلسفة</option>
+        <option value="ديني">ديني</option>
+        <!-- Add more tag options as needed -->
+      </select>
+    </div>
+
+    <div id="bookCards" class="row">
+      <!-- Book cards will be dynamically added here -->
+    </div>
+  </section>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tagSelect = document.getElementById('tagSelect');
+    const bookCardsContainer = document.getElementById('bookCards');
+
+    // Load JSON data
+    fetch('https://booksapi.u1u1u1u1u1u1u1.repl.co/api/books')
+      .then(response => response.json())
+      .then(data => {
+        // Generate book cards dynamically based on the selected tag
+        function generateBookCards(selectedTag) {
+          // Clear existing book cards
+          bookCardsContainer.innerHTML = '';
+
+          // Filter books based on the selected tag
+          const filteredBooks = selectedTag === 'all' ? data : data.filter(book => book.tag === selectedTag);
+
+          // Generate book cards for the filtered books
+          filteredBooks.forEach(book => {
+            const cardHtml = `
+              <div class="col-lg-4 mb-4">
+                <div class="card animate__animated animate__fadeInLeft">
+                  <img src="${book.image}" class="card-img-top" alt="${book.title}">
+                  <div class="card-body">
+                    <h5 class="card-title">${book.title}</h5>
+                    <p class="card-text">
+                      <strong>الكاتب:</strong> ${book.author}<br>
+                      <strong>الوسم:</strong> ${book.tag}<br>
+                      <strong>اللغة:</strong> ${book.language}
+                    </p>
+                    <a href="${book.link}" class="btn btn-primary">
+                      اقرأ الكتاب
+                      <i class="fas fa-book-reader ml-2"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            bookCardsContainer.innerHTML += cardHtml;
+          });
+        }
+
+        // Populate the dropdown with unique tags from the data
+        const uniqueTags = [...new Set(data.map(book => book.tag))];
+        uniqueTags.forEach(tag => {
+          const option = document.createElement('option');
+          option.value = tag;
+          option.text = tag;
+          tagSelect.add(option);
+        });
+
+        // Add event listener to dynamically update book cards based on the selected tag
+        tagSelect.addEventListener('change', function () {
+          generateBookCards(this.value);
+        });
+
+        // Initially load book cards with all books
+        generateBookCards('all');
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  });
+</script>
+
+</body>
+</html>
