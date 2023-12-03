@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +18,7 @@
 
     .header {
       background: url('https://wallpapers.com/images/high/chill-4k-mountain-sunset-art-6jor3hh9q5cm5bjj.webp') center/cover no-repeat;
-      padding: 20px 20px 100px 20px;
+      padding: 100px 20px;
       text-align: center;
       color: #fff;
       margin-bottom: 40px;
@@ -33,8 +32,7 @@
       padding: 50px;
     }
 
-    h2,
-    h3 {
+    h2, h3 {
       color: #3498db;
     }
 
@@ -57,86 +55,63 @@
     .btn-primary:hover {
       background-color: #2980b9;
     }
-
     .card-img-top {
-      height: 350px;
-      /* Adjust the height as needed */
-      width: 100%;
-      /* Set the width to 100% to maintain responsiveness */
-      object-fit: cover;
-      /* Ensure the image covers the entire space */
-    }
-
-    .red-bar {
-      background-color: #ff0000;
-      /* Red background color */
-      padding: 15px;
-      text-align: center;
-    }
-
-    .white-text {
-      color: #ffffff;
-      /* White text color */
-      margin: 0;
-      font-size: 1.5em;
-      font-weight: bold;
+      height: 350px; /* Adjust the height as needed */
+      width: 100%; /* Set the width to 100% to maintain responsiveness */
+      object-fit: cover; /* Ensure the image covers the entire space */
     }
   </style>
 </head>
-
 <body>
 
-  <div class="header">
-    <div class="red-bar">
-      <p class="white-text">We Stand We Gaza</p>
+<div class="header">
+  <h1 class="animate__animated animate__fadeInDown">مكتبة الكتب</h1>
+  <p class="lead animate__animated animate__fadeInUp">استكشف مجموعة الكتب الرائعة وساهم في رحلتك التعليمية</p>
+</div>
+
+<div class="container">
+  <section>
+    <h2 class="text-center mb-4 animate__animated animate__fadeInDown">الكتب</h2>
+
+    <!-- Dropdown for selecting tags -->
+    <div class="text-center mb-4">
+      <label for="tagSelect" class="mr-2">اختر الوسم:</label>
+      <select id="tagSelect" class="form-control">
+        <option value="all">الكل</option>
+        <!-- Add more tag options as needed -->
+      </select>
     </div>
-    <h1 class="animate__animated animate__fadeInDown">مكتبة الكتب</h1>
-    <p class="lead animate__animated animate__fadeInUp">استكشف مجموعة الكتب الرائعة وساهم في رحلتك التعليمية</p>
-  </div>
 
-  <div class="container">
-    <section>
-      <h2 class="text-center mb-4 animate__animated animate__fadeInDown">الكتب</h2>
+    <div id="bookCards" class="row">
+      <!-- Book cards will be dynamically added here -->
+    </div>
+  </section>
+</div>
 
-      <!-- Dropdown for selecting tags -->
-      <div class="text-center mb-4">
-        <label for="tagSelect" class="mr-2">اختر الوسم:</label>
-        <select id="tagSelect" class="form-control">
-          <option value="all">الكل</option>
-          <!-- Add more tag options as needed -->
-        </select>
-      </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-      <div id="bookCards" class="row">
-        <!-- Book cards will be dynamically added here -->
-      </div>
-    </section>
-  </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tagSelect = document.getElementById('tagSelect');
+    const bookCardsContainer = document.getElementById('bookCards');
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    // Load JSON data
+    fetch('https://booksapi.u1u1u1u1u1u1u1.repl.co/api/books')
+      .then(response => response.json())
+      .then(data => {
+        // Generate book cards dynamically based on the selected tag
+        function generateBookCards(selectedTag) {
+          // Clear existing book cards
+          bookCardsContainer.innerHTML = '';
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const tagSelect = document.getElementById('tagSelect');
-      const bookCardsContainer = document.getElementById('bookCards');
+          // Filter books based on the selected tag
+          const filteredBooks = selectedTag === 'all' ? data : data.filter(book => book.tag === selectedTag);
 
-      // Load JSON data
-      fetch('https://booksapi.u1u1u1u1u1u1u1.repl.co/api/books')
-        .then(response => response.json())
-        .then(data => {
-          // Generate book cards dynamically based on the selected tag
-          function generateBookCards(selectedTag) {
-            // Clear existing book cards
-            bookCardsContainer.innerHTML = '';
-
-            // Filter books based on the selected tag
-            const filteredBooks = selectedTag === 'all' ? data : data.filter(book => book.tag === selectedTag);
-
-            // Generate book cards for the filtered books
-            filteredBooks.forEach(book => {
-              const cardHtml = `
+          // Generate book cards for the filtered books
+          filteredBooks.forEach(book => {
+            const cardHtml = `
               <div class="col-lg-4 mb-4">
                 <div class="card animate__animated animate__fadeInLeft">
                   <img src="${book.image}" class="card-img-top" alt="${book.title}">
@@ -156,31 +131,30 @@
               </div>
             `;
 
-              bookCardsContainer.innerHTML += cardHtml;
-            });
-          }
-
-          // Populate the dropdown with unique tags from the data
-          const uniqueTags = [...new Set(data.map(book => book.tag))];
-          uniqueTags.forEach(tag => {
-            const option = document.createElement('option');
-            option.value = tag;
-            option.text = tag;
-            tagSelect.add(option);
+            bookCardsContainer.innerHTML += cardHtml;
           });
+        }
 
-          // Add event listener to dynamically update book cards based on the selected tag
-          tagSelect.addEventListener('change', function() {
-            generateBookCards(this.value);
-          });
+        // Populate the dropdown with unique tags from the data
+        const uniqueTags = [...new Set(data.map(book => book.tag))];
+        uniqueTags.forEach(tag => {
+          const option = document.createElement('option');
+          option.value = tag;
+          option.text = tag;
+          tagSelect.add(option);
+        });
 
-          // Initially load book cards with all books
-          generateBookCards('all');
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    });
-  </script>
+        // Add event listener to dynamically update book cards based on the selected tag
+        tagSelect.addEventListener('change', function () {
+          generateBookCards(this.value);
+        });
+
+        // Initially load book cards with all books
+        generateBookCards('all');
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  });
+</script>
 
 </body>
-
 </html>
