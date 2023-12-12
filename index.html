@@ -69,6 +69,22 @@
 
     .pagination {
       margin-top: 20px;
+      text-align: center;
+    }
+
+    .pagination button {
+      margin: 5px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid #3498db;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .pagination button:hover {
+      background-color: #2980b9;
     }
   </style>
 </head>
@@ -82,7 +98,9 @@
 <div class="container">
   <section>
     <h2 class="text-center mb-4 animate__animated animate__fadeInDown">الكتب</h2>
-
+    <div class="footer">
+      <p>عدد الوثائق: <span id="documentCount">0</span></p>
+    </div>
     <!-- Dropdown for selecting tags -->
     <div class="text-center mb-4">
       <label for="tagSelect" class="mr-2">اختر الوسم:</label>
@@ -97,15 +115,14 @@
     </div>
 
     <div class="pagination">
-      <button class="btn btn-primary" id="prevPage">الصفحة السابقة</button>
-      <button class="btn btn-primary" id="nextPage">الصفحة التالية</button>
+      <button class="btn btn-primary" id="prevPage">&lt;</button>
+      <button class="btn btn-primary" id="nextPage">&gt;</button>
+      <span id="currentPage">1</span>
     </div>
   </section>
 </div>
 
-<div class="footer">
-  <p>عدد الوثائق: <span id="documentCount">0</span></p>
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
