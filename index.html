@@ -55,10 +55,20 @@
     .btn-primary:hover {
       background-color: #2980b9;
     }
+
     .card-img-top {
       height: 350px; /* Adjust the height as needed */
       width: 100%; /* Set the width to 100% to maintain responsiveness */
       object-fit: cover; /* Ensure the image covers the entire space */
+    }
+
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .pagination {
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -85,7 +95,16 @@
     <div id="bookCards" class="row">
       <!-- Book cards will be dynamically added here -->
     </div>
+
+    <div class="pagination">
+      <button class="btn btn-primary" id="prevPage">الصفحة السابقة</button>
+      <button class="btn btn-primary" id="nextPage">الصفحة التالية</button>
+    </div>
   </section>
+</div>
+
+<div class="footer">
+  <p>عدد الوثائق: <span id="documentCount">0</span></p>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -96,12 +115,17 @@
   document.addEventListener("DOMContentLoaded", function () {
     const tagSelect = document.getElementById('tagSelect');
     const bookCardsContainer = document.getElementById('bookCards');
+    const documentCountSpan = document.getElementById('documentCount');
+    const prevPageButton = document.getElementById('prevPage');
+    const nextPageButton = document.getElementById('nextPage');
+    const booksPerPage = 9;
+    let currentPage = 1;
 
     // Load JSON data
     fetch('https://booksapi.u1u1u1u1u1u1u1.repl.co/api/books')
       .then(response => response.json())
       .then(data => {
-        // Generate book cards dynamically based on the selected tag
+        // Function to generate book cards for the current page
         function generateBookCards(selectedTag) {
           // Clear existing book cards
           bookCardsContainer.innerHTML = '';
@@ -109,8 +133,15 @@
           // Filter books based on the selected tag
           const filteredBooks = selectedTag === 'all' ? data : data.filter(book => book.tag === selectedTag);
 
-          // Generate book cards for the filtered books
-          filteredBooks.forEach(book => {
+          // Calculate start and end indices for the current page
+          const startIndex = (currentPage - 1) * booksPerPage;
+          const endIndex = startIndex + booksPerPage;
+
+          // Slice books for the current page
+          const booksForPage = filteredBooks.slice(startIndex, endIndex);
+
+          // Generate book cards for the current page
+          booksForPage.forEach(book => {
             const cardHtml = `
               <div class="col-lg-4 mb-4">
                 <div class="card animate__animated animate__fadeInLeft">
@@ -130,9 +161,11 @@
                 </div>
               </div>
             `;
-
             bookCardsContainer.innerHTML += cardHtml;
           });
+
+          // Update document count
+          documentCountSpan.textContent = filteredBooks.length;
         }
 
         // Populate the dropdown with unique tags from the data
@@ -147,6 +180,24 @@
         // Add event listener to dynamically update book cards based on the selected tag
         tagSelect.addEventListener('change', function () {
           generateBookCards(this.value);
+        });
+
+        // Add event listeners for pagination buttons
+        prevPageButton.addEventListener('click', function () {
+          if (currentPage > 1) {
+            currentPage--;
+            generateBookCards(tagSelect.value);
+          }
+        });
+
+        nextPageButton.addEventListener('click', function () {
+          const totalBooks = tagSelect.value === 'all' ? data.length : data.filter(book => book.tag === tagSelect.value).length;
+          const totalPages = Math.ceil(totalBooks / booksPerPage);
+
+          if (currentPage < totalPages) {
+            currentPage++;
+            generateBookCards(tagSelect.value);
+          }
         });
 
         // Initially load book cards with all books
