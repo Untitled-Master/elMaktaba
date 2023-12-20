@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المكتبة</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/50/FFFFFF/reading.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <h1 class="animate__animated animate__fadeInDown">مكتبة الكتب</h1>
+  <p class="lead animate__animated animate__fadeInUp">استكشف مجموعة الكتب الرائعة وساهم في رحلتك التعليمية</p>
+</div>
+
+<div class="container">
+  <section>
+    <h2 class="text-center mb-4 animate__animated animate__fadeInDown">الكتب</h2>
+    <div class="footer">
+      <p>عدد الوثائق: <span id="documentCount">0</span></p>
+    </div>
+    <!-- Dropdown for selecting tags -->
+    <div class="text-center mb-4">
+      <label for="tagSelect" class="mr-2">اختر الوسم:</label>
+      <select id="tagSelect" class="form-control">
+        <option value="all">الكل</option>
+        <!-- Add more tag options as needed -->
+      </select>
+    </div>
+
+    <div id="bookCards" class="row">
+      <!-- Book cards will be dynamically added here -->
+    </div>
+  </section>
+</div>
+<div class="pagination">
+  <button class="btn btn-primary" id="prevPage">&lt;</button>
+  <button class="btn btn-primary" id="nextPage">&gt;</button>
+  <span id="currentPage"></span>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
