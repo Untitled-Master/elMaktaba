@@ -1,0 +1,77 @@
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.header {
+  background: url('https://wallpapers.com/images/high/chill-4k-mountain-sunset-art-6jor3hh9q5cm5bjj.webp') center/cover no-repeat;
+  padding: 50px 20px; /* Adjusted padding */
+  text-align: center;
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-size: 2.5em; /* Adjusted font size */
+}
+
+.container {
+  padding: 30px; /* Adjusted padding */
+}
+
+h2, h3 {
+  color: #3498db;
+}
+
+.card {
+  background-color: #333;
+  color: #fff;
+  height: 520px; /* Adjusted height */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background-color: #3498db;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.card-img-top {
+  height: 300px; /* Adjusted height */
+  width: 100%;
+  object-fit: cover;
+}
+
+.footer {
+  margin-top: 30px; /* Adjusted margin */
+  text-align: center;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  background-color: #23333d;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #3498db;
+  border: 1px solid #fff;
+}
