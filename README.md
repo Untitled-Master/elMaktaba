@@ -21,8 +21,8 @@ This repository contains the source code for a simple web interface that showcas
 ## Dependencies
 
 - ![Bootstrap](https://img.icons8.com/ios-filled/20/3498db/bootstrap.png) [Bootstrap](https://getbootstrap.com/): CSS framework for responsive design.
-- ![Font Awesome](https://img.icons8.com/ios-filled/20/3498db/fontawesome.png) [Font Awesome](https://fontawesome.com/): Icon library for adding visual elements.
-- ![animate.css](https://img.icons8.com/ios-filled/20/3498db/animate.css.png) [Animate.css](https://animate.style/): Library for adding animated effects to elements.
+- ![Font Awesome](https://img.icons8.com/ios-filled/20/3498db/css.png) [Font Awesome](https://fontawesome.com/): Icon library for adding visual elements.
+- ![animate.css](https://img.icons8.com/ios-filled/20/3498db/css.png) [Animate.css](https://animate.style/): Library for adding animated effects to elements.
 - ![Google Fonts](https://img.icons8.com/ios-filled/20/3498db/google-logo.png) [Google Fonts - Tajawal](https://fonts.google.com/specimen/Tajawal): Font used for the header.
 
 ## Data Loading
